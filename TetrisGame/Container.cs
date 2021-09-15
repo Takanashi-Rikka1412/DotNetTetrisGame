@@ -10,11 +10,25 @@ namespace TetrisGame
     {
         int[,] map;
         Tetris tetris;
+        State tetrisState;
         public Container()
         {
             map = new int[Common.conatinerHeight,Common.conatinerWidth];
             tetris = null;
         }
+
+
+        public void Create(Type type)
+        {
+            
+        }
+
+
+
+
+
+
+
 
 
         // 检测与其他方块的碰撞
@@ -75,19 +89,29 @@ namespace TetrisGame
                 return;
             tetris.GoRight();
         }
-        // 右移
+        // 下落
         public void GoDown()
         {
             if (Collide(Move.DOWN))
+            {
+                DropOnGround();
                 return;
+            }
             tetris.GoDown();
         }
         // 直接下落
         public void GoDownDirectly()
         {
+            while(!Collide(Move.DOWN))
+                tetris.GoDown();
+
+            DropOnGround();
+        }
+        // 落地
+        public void DropOnGround()
+        {
             
         }
-
     }
 }
 

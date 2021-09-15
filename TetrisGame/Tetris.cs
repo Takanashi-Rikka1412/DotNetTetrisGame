@@ -157,7 +157,7 @@ namespace TetrisGame
                 p.GoRight();
             }
         }
-        // 右移
+        // 下落
         public void GoDown()
         {
             foreach (Point p in point)
@@ -165,11 +165,7 @@ namespace TetrisGame
                 p.GoDown();
             }
         }
-        // 直接下落
-        public void GoDownDirectly()
-        {
-            
-        }
+
         
     }
 }
