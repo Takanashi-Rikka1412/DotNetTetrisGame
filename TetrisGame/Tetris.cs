@@ -9,12 +9,12 @@ namespace TetrisGame
     class Tetris
     {
         public Point[] point;       // 方块各点坐标
-        Type type;           // 方块类型
+        public Type Type { get; }   // 方块类型
         int state;           // 方块旋转4种状态
 
-        public Tetris(Type type,Container container)
+        public Tetris(Type type)
         {
-            this.type = type;
+            this.Type = type;
             state = 0;
             switch (type)
             {
@@ -101,7 +101,7 @@ namespace TetrisGame
         // 旋转(逆时针)
         public void Rotate()
         {
-            switch (type)
+            switch (Type)
             {
                 case Type.T:
                 case Type.J:
@@ -109,7 +109,7 @@ namespace TetrisGame
                 case Type.S:
                 case Type.Z:
                     Point pCenter = CenterPoint();
-                    foreach(Point p in point)
+                    foreach (Point p in point)
                     {
                         int prow = p.Row;
                         int pcol = p.Col;
@@ -127,7 +127,7 @@ namespace TetrisGame
                         p.Col = (int)(pICenter.Col + (prow - pICenter.Row));
                     }
                     break;
-                case Type.O:break;
+                case Type.O: break;
                 default: break;
             }
 
@@ -140,6 +140,15 @@ namespace TetrisGame
             state = ++state % 4;
         }
 
+        // 调整方块位置（初始化时调用）
+        public void Move(Point movePoint)
+        {
+            foreach (Point p in point)
+            {
+                p.Row += movePoint.Row;
+                p.Col += movePoint.Col;
+            }
+        }
 
         // 左移
         public void GoLeft()
@@ -166,6 +175,6 @@ namespace TetrisGame
             }
         }
 
-        
+
     }
 }

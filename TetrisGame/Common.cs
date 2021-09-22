@@ -12,6 +12,8 @@ namespace TetrisGame
 
     enum State { Created, Dropping, Dropped };
 
+    enum Color { Cyan, Yellow, Purple, Blue, Orange, Green, Red };  // 依次表示IOTJLSZ的颜色
+
 
     class Common
     {

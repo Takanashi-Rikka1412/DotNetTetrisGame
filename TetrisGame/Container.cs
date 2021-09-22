@@ -10,24 +10,26 @@ namespace TetrisGame
     {
         int[,] map;
         Tetris tetris;
-        State tetrisState;
+        //State tetrisState;
         public Container()
         {
-            map = new int[Common.conatinerHeight,Common.conatinerWidth];
+            map = new int[Common.conatinerHeight + 1, Common.conatinerWidth + 1];
             tetris = null;
         }
 
 
         public void Create(Type type)
         {
-            
+            tetris = new Tetris(type);
+            int col = (Common.conatinerWidth - tetris.RightCol() + tetris.LeftCol() - 1) / 2;
+            tetris.Move(new Point(0, col));
+
+            foreach (Point p in tetris.point)
+            {
+                map[p.Row, p.Col] = (int)type;
+            }
+
         }
-
-
-
-
-
-
 
 
 
@@ -74,20 +76,47 @@ namespace TetrisGame
             }
         }
 
+        // 将map上的颜色消除
+        public void DePaint()
+        {
+            foreach (Point p in tetris.point)
+            {
+                map[p.Row, p.Col] = 0;
+            }
+        }
+
+        // 在map上添加方块颜色
+        public void Paint()
+        {
+            foreach (Point p in tetris.point)
+            {
+                map[p.Row, p.Col] = (int)tetris.Type;
+            }
+        }
 
         // 左移
         public void GoLeft()
         {
             if (Collide(Move.LEFT))
                 return;
+
+            DePaint();
+
             tetris.GoLeft();
+
+            Paint();
         }
         // 右移
         public void GoRight()
         {
             if (Collide(Move.RIGHT))
                 return;
+
+            DePaint();
+
             tetris.GoRight();
+
+            Paint();
         }
         // 下落
         public void GoDown()
@@ -97,20 +126,84 @@ namespace TetrisGame
                 DropOnGround();
                 return;
             }
+
+            DePaint();
+
             tetris.GoDown();
+
+            Paint();
         }
         // 直接下落
         public void GoDownDirectly()
         {
-            while(!Collide(Move.DOWN))
+            DePaint();
+
+            while (!Collide(Move.DOWN))
                 tetris.GoDown();
+
+            DePaint();
 
             DropOnGround();
         }
         // 落地
         public void DropOnGround()
         {
-            
+            List<int> rows = ClearCheck();
+            foreach (int row in rows)
+            {
+                Clear(row);
+            }
+
+            for (int row = rows.Max(), i = 1; row >= 1; row--)
+            {
+                if (rows.Contains(row - i))
+                    i++;
+                if (row - i < 1)
+                {
+                    for (int col = 1; col <= Common.conatinerHeight; col++)
+                    {
+                        map[row, col] = 0;
+                    }
+                }
+                else
+                {
+                    for (int col = 1; col <= Common.conatinerHeight; col++)
+                    {
+                        map[row, col] = map[row - i, col];
+                    }
+                }
+
+            }
+        }
+
+        // 消除检查
+        public List<int> ClearCheck()
+        {
+            List<int> rows = new List<int>();
+            for (int row = 1; row <= Common.conatinerHeight; row++)
+            {
+                int col = 1;
+                for (; col <= Common.conatinerWidth; col++)
+                {
+                    if (map[row, col] == 0)
+                        break;
+                }
+                if (col <= Common.conatinerWidth)
+                    continue;
+                else
+                    rows.Add(row);
+            }
+
+            return rows;
+        }
+
+        // 消除
+        public void Clear(int row)
+        {
+            for (int col = 1; col <= Common.conatinerWidth; col++)
+            {
+                map[row, col] = 0;
+            }
         }
     }
 }
