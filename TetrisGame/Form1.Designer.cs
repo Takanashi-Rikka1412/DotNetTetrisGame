@@ -34,15 +34,19 @@
             this.btnScoreBoard = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
             this.tabGame = new System.Windows.Forms.TabPage();
+            this.btnMenu = new System.Windows.Forms.Button();
+            this.btnRestart = new System.Windows.Forms.Button();
             this.pnlNext = new System.Windows.Forms.Panel();
             this.pnlGame = new System.Windows.Forms.Panel();
             this.tabScoreBoard = new System.Windows.Forms.TabPage();
+            this.btnMenu2 = new System.Windows.Forms.Button();
             this.dgvScoreBoard = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnRestart = new System.Windows.Forms.Button();
-            this.btnMenu = new System.Windows.Forms.Button();
-            this.btnMenu2 = new System.Windows.Forms.Button();
+            this.lblLevel = new System.Windows.Forms.Label();
+            this.lblScore = new System.Windows.Forms.Label();
+            this.lblLevelNum = new System.Windows.Forms.Label();
+            this.lblScoreNum = new System.Windows.Forms.Label();
             this.tab.SuspendLayout();
             this.tabMenu.SuspendLayout();
             this.tabGame.SuspendLayout();
@@ -109,6 +113,10 @@
             // tabGame
             // 
             this.tabGame.BackColor = System.Drawing.Color.Gainsboro;
+            this.tabGame.Controls.Add(this.lblScoreNum);
+            this.tabGame.Controls.Add(this.lblLevelNum);
+            this.tabGame.Controls.Add(this.lblScore);
+            this.tabGame.Controls.Add(this.lblLevel);
             this.tabGame.Controls.Add(this.btnMenu);
             this.tabGame.Controls.Add(this.btnRestart);
             this.tabGame.Controls.Add(this.pnlNext);
@@ -119,12 +127,32 @@
             this.tabGame.Size = new System.Drawing.Size(670, 835);
             this.tabGame.TabIndex = 1;
             // 
+            // btnMenu
+            // 
+            this.btnMenu.Location = new System.Drawing.Point(470, 552);
+            this.btnMenu.Name = "btnMenu";
+            this.btnMenu.Size = new System.Drawing.Size(144, 51);
+            this.btnMenu.TabIndex = 3;
+            this.btnMenu.Text = "回到主菜单";
+            this.btnMenu.UseVisualStyleBackColor = true;
+            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
+            // 
+            // btnRestart
+            // 
+            this.btnRestart.Location = new System.Drawing.Point(470, 472);
+            this.btnRestart.Name = "btnRestart";
+            this.btnRestart.Size = new System.Drawing.Size(144, 51);
+            this.btnRestart.TabIndex = 2;
+            this.btnRestart.Text = "重新开始";
+            this.btnRestart.UseVisualStyleBackColor = true;
+            this.btnRestart.Click += new System.EventHandler(this.btnRestart_Click);
+            // 
             // pnlNext
             // 
             this.pnlNext.BackColor = System.Drawing.Color.White;
-            this.pnlNext.Location = new System.Drawing.Point(442, 23);
+            this.pnlNext.Location = new System.Drawing.Point(454, 31);
             this.pnlNext.Name = "pnlNext";
-            this.pnlNext.Size = new System.Drawing.Size(200, 200);
+            this.pnlNext.Size = new System.Drawing.Size(160, 160);
             this.pnlNext.TabIndex = 1;
             // 
             // pnlGame
@@ -145,6 +173,16 @@
             this.tabScoreBoard.Size = new System.Drawing.Size(670, 835);
             this.tabScoreBoard.TabIndex = 2;
             this.tabScoreBoard.UseVisualStyleBackColor = true;
+            // 
+            // btnMenu2
+            // 
+            this.btnMenu2.Location = new System.Drawing.Point(34, 24);
+            this.btnMenu2.Name = "btnMenu2";
+            this.btnMenu2.Size = new System.Drawing.Size(144, 51);
+            this.btnMenu2.TabIndex = 3;
+            this.btnMenu2.Text = "回到主菜单";
+            this.btnMenu2.UseVisualStyleBackColor = true;
+            this.btnMenu2.Click += new System.EventHandler(this.btnMenu2_Click);
             // 
             // dgvScoreBoard
             // 
@@ -173,35 +211,39 @@
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
             // 
-            // btnRestart
+            // lblLevel
             // 
-            this.btnRestart.Location = new System.Drawing.Point(470, 472);
-            this.btnRestart.Name = "btnRestart";
-            this.btnRestart.Size = new System.Drawing.Size(144, 51);
-            this.btnRestart.TabIndex = 2;
-            this.btnRestart.Text = "重新开始";
-            this.btnRestart.UseVisualStyleBackColor = true;
-            this.btnRestart.Click += new System.EventHandler(this.btnRestart_Click);
+            this.lblLevel.AutoSize = true;
+            this.lblLevel.Location = new System.Drawing.Point(442, 274);
+            this.lblLevel.Name = "lblLevel";
+            this.lblLevel.Size = new System.Drawing.Size(44, 18);
+            this.lblLevel.TabIndex = 4;
+            this.lblLevel.Text = "等级";
             // 
-            // btnMenu
+            // lblScore
             // 
-            this.btnMenu.Location = new System.Drawing.Point(470, 552);
-            this.btnMenu.Name = "btnMenu";
-            this.btnMenu.Size = new System.Drawing.Size(144, 51);
-            this.btnMenu.TabIndex = 3;
-            this.btnMenu.Text = "回到主菜单";
-            this.btnMenu.UseVisualStyleBackColor = true;
-            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
+            this.lblScore.AutoSize = true;
+            this.lblScore.Location = new System.Drawing.Point(442, 336);
+            this.lblScore.Name = "lblScore";
+            this.lblScore.Size = new System.Drawing.Size(44, 18);
+            this.lblScore.TabIndex = 5;
+            this.lblScore.Text = "分数";
             // 
-            // btnMenu2
+            // lblLevelNum
             // 
-            this.btnMenu2.Location = new System.Drawing.Point(34, 24);
-            this.btnMenu2.Name = "btnMenu2";
-            this.btnMenu2.Size = new System.Drawing.Size(144, 51);
-            this.btnMenu2.TabIndex = 3;
-            this.btnMenu2.Text = "回到主菜单";
-            this.btnMenu2.UseVisualStyleBackColor = true;
-            this.btnMenu2.Click += new System.EventHandler(this.btnMenu2_Click);
+            this.lblLevelNum.AutoSize = true;
+            this.lblLevelNum.Location = new System.Drawing.Point(526, 274);
+            this.lblLevelNum.Name = "lblLevelNum";
+            this.lblLevelNum.Size = new System.Drawing.Size(0, 18);
+            this.lblLevelNum.TabIndex = 6;
+            // 
+            // lblScoreNum
+            // 
+            this.lblScoreNum.AutoSize = true;
+            this.lblScoreNum.Location = new System.Drawing.Point(526, 336);
+            this.lblScoreNum.Name = "lblScoreNum";
+            this.lblScoreNum.Size = new System.Drawing.Size(0, 18);
+            this.lblScoreNum.TabIndex = 7;
             // 
             // Form1
             // 
@@ -214,6 +256,7 @@
             this.tab.ResumeLayout(false);
             this.tabMenu.ResumeLayout(false);
             this.tabGame.ResumeLayout(false);
+            this.tabGame.PerformLayout();
             this.tabScoreBoard.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvScoreBoard)).EndInit();
             this.ResumeLayout(false);
@@ -237,6 +280,10 @@
         private System.Windows.Forms.Button btnMenu;
         private System.Windows.Forms.Button btnRestart;
         private System.Windows.Forms.Button btnMenu2;
+        private System.Windows.Forms.Label lblScoreNum;
+        private System.Windows.Forms.Label lblLevelNum;
+        private System.Windows.Forms.Label lblScore;
+        private System.Windows.Forms.Label lblLevel;
     }
 }
 

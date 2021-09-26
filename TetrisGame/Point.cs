@@ -10,18 +10,8 @@ namespace TetrisGame
     //且从上往下，第一行第二格即为（1,2）
     class Point
     {
-        private int _row;
-        private int _col;
-        public int Row
-        {
-            get => _row;
-            set => _row = (value > 0 && value <= Common.conatinerHeight) ? value : 1;
-        }
-        public int Col
-        {
-            get => _col;
-            set => _col = (value > 0 && value <= Common.conatinerWidth) ? value : 1;
-        }
+        public int Row{get; set;}
+        public int Col{ get; set; }
         public Point(int row, int col)
         {
             Row = row;
@@ -51,26 +41,13 @@ namespace TetrisGame
             Col++;
         }
 
-        /*
-        //将行与列对换
-        public void Reverse()
+        public override bool Equals(object obj)
         {
-            int p = Row;
-            Row = Col;
-            Col = p;
+            var point = obj as Point;
+            return point != null &&
+                   Row == point.Row &&
+                   Col == point.Col;
         }
-        //加减等号重载
-        public static Point operator +(Point p1, Point p2)
-        {
-            return new Point(p1.Row + p2.Row, p1.Col + p2.Col);
-        }
-        public static Point operator -(Point p1, Point p2)
-        {
-            return new Point(p1.Row - p2.Row, p1.Col - p2.Col);
-        }
-        */
-
-
     }
 
     class FloatPoint

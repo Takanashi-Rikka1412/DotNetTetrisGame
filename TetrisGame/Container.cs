@@ -8,12 +8,19 @@ namespace TetrisGame
 {
     class Container
     {
-        int[,] map;
+        public int[,] map;
         Tetris tetris;
         //State tetrisState;
         public Container()
         {
-            map = new int[Common.conatinerHeight + 1, Common.conatinerWidth + 1];
+            map = new int[Common.containerHeight + 1, Common.containerWidth + 1];
+            for (int row = 1; row <= Common.containerHeight; row++)
+            {
+                for (int col = 1; col <= Common.containerWidth; col++)
+                {
+                    map[row, col] = -1;
+                }
+            }
             tetris = null;
         }
 
@@ -21,7 +28,7 @@ namespace TetrisGame
         public void Create(Type type)
         {
             tetris = new Tetris(type);
-            int col = (Common.conatinerWidth - tetris.RightCol() + tetris.LeftCol() - 1) / 2;
+            int col = (Common.containerWidth - tetris.RightCol() + tetris.LeftCol() - 1) / 2;
             tetris.Move(new Point(0, col));
 
             foreach (Point p in tetris.point)
@@ -43,32 +50,32 @@ namespace TetrisGame
                         return true;
                     foreach (Point p in tetris.point)
                     {
-                        if (map[p.Row, p.Col - 1] > 0)
+                        if (map[p.Row, p.Col - 1] >= 0 && !tetris.point.Contains(new Point(p.Row, p.Col - 1)))
                             return true;
                     }
                     return false;
                 case Move.RIGHT:
-                    if (tetris.RightCol() >= Common.conatinerWidth)
+                    if (tetris.RightCol() >= Common.containerWidth)
                         return true;
                     foreach (Point p in tetris.point)
                     {
-                        if (map[p.Row, p.Col + 1] > 0)
+                        if (map[p.Row, p.Col + 1] >= 0 && !tetris.point.Contains(new Point(p.Row, p.Col + 1)))
                             return true;
                     }
                     return false;
                 case Move.DOWN:
-                    if (tetris.LowRow() >= Common.conatinerHeight)
+                    if (tetris.LowRow() >= Common.containerHeight)
                         return true;
                     foreach (Point p in tetris.point)
                     {
-                        if (map[p.Row + 1, p.Col] > 0)
+                        if (map[p.Row + 1, p.Col] >= 0 && !tetris.point.Contains(new Point(p.Row + 1, p.Col)))
                             return true;
                     }
                     return false;
                 case Move.STAY:
                     foreach (Point p in tetris.point)
                     {
-                        if (map[p.Row, p.Col] > 0)
+                        if (map[p.Row, p.Col] >= 0 && !tetris.point.Contains(new Point(p.Row, p.Col)))
                             return true;
                     }
                     return false;
@@ -81,7 +88,7 @@ namespace TetrisGame
         {
             foreach (Point p in tetris.point)
             {
-                map[p.Row, p.Col] = 0;
+                map[p.Row, p.Col] = -1;
             }
         }
 
@@ -119,12 +126,11 @@ namespace TetrisGame
             Paint();
         }
         // 下落
-        public void GoDown()
+        public int GoDown()
         {
             if (Collide(Move.DOWN))
             {
-                DropOnGround();
-                return;
+                return DropOnGround();
             }
 
             DePaint();
@@ -132,27 +138,32 @@ namespace TetrisGame
             tetris.GoDown();
 
             Paint();
+
+            return -1;
         }
         // 直接下落
-        public void GoDownDirectly()
+        public int GoDownDirectly()
         {
             DePaint();
 
             while (!Collide(Move.DOWN))
                 tetris.GoDown();
 
-            DePaint();
+            Paint();
 
-            DropOnGround();
+            return DropOnGround();
         }
         // 落地
-        public void DropOnGround()
+        public int DropOnGround()
         {
             List<int> rows = ClearCheck();
+            if (rows.Count <= 0)
+                return 0;
             foreach (int row in rows)
             {
                 Clear(row);
             }
+
 
             for (int row = rows.Max(), i = 1; row >= 1; row--)
             {
@@ -160,35 +171,37 @@ namespace TetrisGame
                     i++;
                 if (row - i < 1)
                 {
-                    for (int col = 1; col <= Common.conatinerHeight; col++)
+                    for (int col = 1; col <= Common.containerHeight; col++)
                     {
-                        map[row, col] = 0;
+                        map[row, col] = -1;
                     }
                 }
                 else
                 {
-                    for (int col = 1; col <= Common.conatinerHeight; col++)
+                    for (int col = 1; col <= Common.containerHeight; col++)
                     {
                         map[row, col] = map[row - i, col];
                     }
                 }
 
             }
+
+            return rows.Count;
         }
 
         // 消除检查
         public List<int> ClearCheck()
         {
             List<int> rows = new List<int>();
-            for (int row = 1; row <= Common.conatinerHeight; row++)
+            for (int row = 1; row <= Common.containerHeight; row++)
             {
                 int col = 1;
-                for (; col <= Common.conatinerWidth; col++)
+                for (; col <= Common.containerWidth; col++)
                 {
-                    if (map[row, col] == 0)
+                    if (map[row, col] == -1)
                         break;
                 }
-                if (col <= Common.conatinerWidth)
+                if (col <= Common.containerWidth)
                     continue;
                 else
                     rows.Add(row);
@@ -200,9 +213,9 @@ namespace TetrisGame
         // 消除
         public void Clear(int row)
         {
-            for (int col = 1; col <= Common.conatinerWidth; col++)
+            for (int col = 1; col <= Common.containerWidth; col++)
             {
-                map[row, col] = 0;
+                map[row, col] = -1;
             }
         }
     }
