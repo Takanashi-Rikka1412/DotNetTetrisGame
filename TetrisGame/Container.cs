@@ -101,6 +101,9 @@ namespace TetrisGame
             }
         }
 
+        // 旋转
+
+
         // 左移
         public void GoLeft()
         {
@@ -171,14 +174,14 @@ namespace TetrisGame
                     i++;
                 if (row - i < 1)
                 {
-                    for (int col = 1; col <= Common.containerHeight; col++)
+                    for (int col = 1; col <= Common.containerWidth; col++)
                     {
                         map[row, col] = -1;
                     }
                 }
                 else
                 {
-                    for (int col = 1; col <= Common.containerHeight; col++)
+                    for (int col = 1; col <= Common.containerWidth; col++)
                     {
                         map[row, col] = map[row - i, col];
                     }

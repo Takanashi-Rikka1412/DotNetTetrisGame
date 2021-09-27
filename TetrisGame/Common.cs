@@ -9,9 +9,9 @@ namespace TetrisGame
     enum Type { I, O, T, J, L, S, Z }; // 方块的类型，分别为：长条形、正方形、T型、J型、L型、S型、Z型
     enum Move { LEFT, RIGHT, DOWN, STAY }; // 移动方向
 
-    enum State { Created, Dropping, Dropped };
+    enum GameState { Start, Pause, Stop };  // 游戏进行状态
 
-    enum TestColor { Cyan, Yellow, Purple, Blue, Orange, Green, Red };  // 依次表示IOTJLSZ的颜色
+    //enum TestColor { Cyan, Yellow, Purple, Blue, Orange, Green, Red };  // 依次表示IOTJLSZ的颜色
 
 
     class Common

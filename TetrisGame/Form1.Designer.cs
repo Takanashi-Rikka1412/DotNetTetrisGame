@@ -34,6 +34,10 @@
             this.btnScoreBoard = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
             this.tabGame = new System.Windows.Forms.TabPage();
+            this.lblScoreNum = new System.Windows.Forms.Label();
+            this.lblLevelNum = new System.Windows.Forms.Label();
+            this.lblScore = new System.Windows.Forms.Label();
+            this.lblLevel = new System.Windows.Forms.Label();
             this.btnMenu = new System.Windows.Forms.Button();
             this.btnRestart = new System.Windows.Forms.Button();
             this.pnlNext = new System.Windows.Forms.Panel();
@@ -43,10 +47,6 @@
             this.dgvScoreBoard = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblLevel = new System.Windows.Forms.Label();
-            this.lblScore = new System.Windows.Forms.Label();
-            this.lblLevelNum = new System.Windows.Forms.Label();
-            this.lblScoreNum = new System.Windows.Forms.Label();
             this.tab.SuspendLayout();
             this.tabMenu.SuspendLayout();
             this.tabGame.SuspendLayout();
@@ -126,6 +126,40 @@
             this.tabGame.Padding = new System.Windows.Forms.Padding(3);
             this.tabGame.Size = new System.Drawing.Size(670, 835);
             this.tabGame.TabIndex = 1;
+            // 
+            // lblScoreNum
+            // 
+            this.lblScoreNum.AutoSize = true;
+            this.lblScoreNum.Location = new System.Drawing.Point(526, 336);
+            this.lblScoreNum.Name = "lblScoreNum";
+            this.lblScoreNum.Size = new System.Drawing.Size(0, 18);
+            this.lblScoreNum.TabIndex = 7;
+            // 
+            // lblLevelNum
+            // 
+            this.lblLevelNum.AutoSize = true;
+            this.lblLevelNum.Location = new System.Drawing.Point(526, 274);
+            this.lblLevelNum.Name = "lblLevelNum";
+            this.lblLevelNum.Size = new System.Drawing.Size(0, 18);
+            this.lblLevelNum.TabIndex = 6;
+            // 
+            // lblScore
+            // 
+            this.lblScore.AutoSize = true;
+            this.lblScore.Location = new System.Drawing.Point(442, 336);
+            this.lblScore.Name = "lblScore";
+            this.lblScore.Size = new System.Drawing.Size(44, 18);
+            this.lblScore.TabIndex = 5;
+            this.lblScore.Text = "分数";
+            // 
+            // lblLevel
+            // 
+            this.lblLevel.AutoSize = true;
+            this.lblLevel.Location = new System.Drawing.Point(442, 274);
+            this.lblLevel.Name = "lblLevel";
+            this.lblLevel.Size = new System.Drawing.Size(44, 18);
+            this.lblLevel.TabIndex = 4;
+            this.lblLevel.Text = "等级";
             // 
             // btnMenu
             // 
@@ -211,48 +245,19 @@
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
             // 
-            // lblLevel
-            // 
-            this.lblLevel.AutoSize = true;
-            this.lblLevel.Location = new System.Drawing.Point(442, 274);
-            this.lblLevel.Name = "lblLevel";
-            this.lblLevel.Size = new System.Drawing.Size(44, 18);
-            this.lblLevel.TabIndex = 4;
-            this.lblLevel.Text = "等级";
-            // 
-            // lblScore
-            // 
-            this.lblScore.AutoSize = true;
-            this.lblScore.Location = new System.Drawing.Point(442, 336);
-            this.lblScore.Name = "lblScore";
-            this.lblScore.Size = new System.Drawing.Size(44, 18);
-            this.lblScore.TabIndex = 5;
-            this.lblScore.Text = "分数";
-            // 
-            // lblLevelNum
-            // 
-            this.lblLevelNum.AutoSize = true;
-            this.lblLevelNum.Location = new System.Drawing.Point(526, 274);
-            this.lblLevelNum.Name = "lblLevelNum";
-            this.lblLevelNum.Size = new System.Drawing.Size(0, 18);
-            this.lblLevelNum.TabIndex = 6;
-            // 
-            // lblScoreNum
-            // 
-            this.lblScoreNum.AutoSize = true;
-            this.lblScoreNum.Location = new System.Drawing.Point(526, 336);
-            this.lblScoreNum.Name = "lblScoreNum";
-            this.lblScoreNum.Size = new System.Drawing.Size(0, 18);
-            this.lblScoreNum.TabIndex = 7;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(678, 844);
             this.Controls.Add(this.tab);
+            this.KeyPreview = true;
+            this.MaximumSize = new System.Drawing.Size(700, 900);
+            this.MinimumSize = new System.Drawing.Size(700, 900);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.tab.ResumeLayout(false);
             this.tabMenu.ResumeLayout(false);
             this.tabGame.ResumeLayout(false);

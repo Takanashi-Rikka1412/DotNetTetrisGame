@@ -17,12 +17,16 @@ namespace TetrisGame
         private Graphics graphics;
         private Graphics graphicsNext;
         private System.Timers.Timer timer;
+        private GameState gameState = GameState.Stop;
+        private delegate void RefreshTextInvokeCallback();
+
+
         public Form1()
         {
             InitializeComponent();
         }
 
-
+        // 游戏开始
         private void GameStart()
         {
             graphics = pnlGame.CreateGraphics();
@@ -32,15 +36,15 @@ namespace TetrisGame
             timer.Elapsed += new ElapsedEventHandler(RefreshContainer);
 
             gameController = new GameController();
-            lblLevelNum.DataBindings.Add("Text", gameController, "Level");
-            lblScoreNum.DataBindings.Add("Text", gameController, "Score");
             gameController.OnNext += RefreshContainerNext;
+            gameController.OnPropertyChanged += RefreshText;
 
             gameController.GameStart();
+            gameState = GameState.Start;
             timer.Start();
         }
 
-        
+
         private void GameOver()
         {
             graphics.Clear(pnlGame.BackColor);
@@ -54,7 +58,7 @@ namespace TetrisGame
 
 
 
-
+        // 刷新方块界面
         private void RefreshContainer(object sender, ElapsedEventArgs e)
         {
             Brush brushColor;
@@ -83,7 +87,7 @@ namespace TetrisGame
                 }
             }
         }
-
+        // 刷新下一个方块提示界面
         private void RefreshContainerNext()
         {
             graphicsNext.Clear(pnlNext.BackColor);
@@ -109,7 +113,21 @@ namespace TetrisGame
             }
 
         }
+        // 刷新等级和分数等
+        private void RefreshText()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new RefreshTextInvokeCallback(RefreshText));
+            }
+            else
+            {
+                lblLevelNum.Text = gameController.Level.ToString();
+                lblScoreNum.Text = gameController.Score.ToString();
+            }
+        }
 
+        // 开始按钮
         private void btnStart_Click(object sender, EventArgs e)
         {
             btnRestart.Visible = false;
@@ -117,30 +135,59 @@ namespace TetrisGame
             tab.SelectTab(1);
             GameStart();
         }
-
+        // 排行榜按钮
         private void btnScoreBoard_Click(object sender, EventArgs e)
         {
             tab.SelectTab(2);
         }
-
+        // 退出按钮
         private void btnQuit_Click(object sender, EventArgs e)
         {
             Environment.Exit(0);
         }
-
+        // 重新开始按钮
         private void btnRestart_Click(object sender, EventArgs e)
         {
             GameStart();
         }
-
+        // 游戏中返回菜单按钮
         private void btnMenu_Click(object sender, EventArgs e)
         {
             tab.SelectTab(0);
         }
-
+        // 排行榜中返回菜单按钮
         private void btnMenu2_Click(object sender, EventArgs e)
         {
             tab.SelectTab(0);
         }
+
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+
+            if (gameState != GameState.Start)
+                return;
+            switch (e.KeyCode)
+            {
+                case Keys.W:
+                case Keys.Up:
+                    break;
+                case Keys.A:
+                case Keys.Left:
+                    gameController.GoLeft();
+                    break;
+                case Keys.D:
+                case Keys.Right:
+                    gameController.GoRight();
+                    break;
+                case Keys.S:
+                case Keys.Down:
+                    gameController.GoDownDirectly();
+                    break;
+                default: break;
+            }
+        }
+
     }
 }

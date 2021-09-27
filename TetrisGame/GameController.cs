@@ -10,15 +10,34 @@ namespace TetrisGame
     class GameController
     {
         private Timer timer;
+        private int level;
+        private int score;
         private int speedMaxLevel = 10;
         private int speedInterval = 100;
         private Random random = new Random();
 
-        public Container container;
+        public Container container { get; private set; }
         public event Action OnNext;
+        public event Action OnPropertyChanged;
 
-        public int Level { get; private set; }
-        public int Score { get; private set; }
+        public int Level
+        {
+            get { return level; }
+            private set
+            {
+                level = value;
+                OnPropertyChanged();
+            }
+        }
+        public int Score
+        {
+            get { return score; }
+            private set
+            {
+                score = value;
+                OnPropertyChanged();
+            }
+        }
         public Type NextType { get; private set; }
 
         public GameController()
@@ -45,16 +64,15 @@ namespace TetrisGame
         }
 
 
-        private void TimerUp(object sender, System.Timers.ElapsedEventArgs e)
+        private void Clear(int clearRows)
         {
-            int clearRows = container.GoDown();
             switch (clearRows)
             {
-                case 0:break;
-                case 1:Score += 100;break;
-                case 2:Score += 300;break;
-                case 3:Score += 500;break;
-                case 4:Score += 800;break;
+                case 0: break;
+                case 1: Score += 100; break;
+                case 2: Score += 300; break;
+                case 3: Score += 500; break;
+                case 4: Score += 800; break;
                 case -1:
                 default:
                     return;
@@ -63,8 +81,34 @@ namespace TetrisGame
                 Level++;
             NewTetris();
         }
+        private void TimerUp(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            int clearRows = container.GoDown();
+            Clear(clearRows);
+        }
+
+
+        // 旋转
+
+        // 左移
+        public void GoLeft()
+        {
+            container.GoLeft();
+        }
+        // 右移
+        public void GoRight()
+        {
+            container.GoRight();
+        }
+        // 直接下落
+        public void GoDownDirectly()
+        {
+            timer.Stop();
+            int clearRows = container.GoDownDirectly();
+            Clear(clearRows);
+            timer.Start();
+        }
 
         
-
     }
 }
