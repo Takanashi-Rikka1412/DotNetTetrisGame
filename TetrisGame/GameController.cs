@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace TetrisGame
@@ -19,6 +18,7 @@ namespace TetrisGame
         public Container container { get; private set; }
         public event Action OnNext;
         public event Action OnPropertyChanged;
+        public event Action OnGameOver;
 
         public int Level
         {
@@ -56,9 +56,19 @@ namespace TetrisGame
             timer.Start();
         }
 
+        public void GameOver()
+        {
+            timer.Stop();
+            timer.Close();
+        }
+
         public void NewTetris()
         {
-            container.Create(NextType);
+            if (container.Create(NextType) == false)
+            {
+                OnGameOver();
+                return;
+            }
             NextType = (Type)random.Next(Common.typeCount);
             OnNext();
         }
@@ -78,7 +88,15 @@ namespace TetrisGame
                     return;
             }
             if (Score >= Level * 1000 && Level < 10)
+            {
                 Level++;
+                timer.Stop();
+                timer.Close();
+                timer = new Timer((speedMaxLevel + 1 - Level) * speedInterval);
+                timer.Elapsed += new ElapsedEventHandler(TimerUp);
+                timer.Start();
+            }
+
             NewTetris();
         }
         private void TimerUp(object sender, System.Timers.ElapsedEventArgs e)
@@ -89,15 +107,22 @@ namespace TetrisGame
 
 
         // 旋转
+        public void Rotate()
+        {
+
+            container.Rotate();
+        }
 
         // 左移
         public void GoLeft()
         {
+
             container.GoLeft();
         }
         // 右移
         public void GoRight()
         {
+
             container.GoRight();
         }
         // 直接下落
@@ -109,6 +134,6 @@ namespace TetrisGame
             timer.Start();
         }
 
-        
+
     }
 }

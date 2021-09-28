@@ -41,12 +41,21 @@ namespace TetrisGame
             Col++;
         }
 
+
         public override bool Equals(object obj)
         {
             var point = obj as Point;
             return point != null &&
                    Row == point.Row &&
                    Col == point.Col;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 1084646500;
+            hashCode = hashCode * -1521134295 + Row.GetHashCode();
+            hashCode = hashCode * -1521134295 + Col.GetHashCode();
+            return hashCode;
         }
     }
 

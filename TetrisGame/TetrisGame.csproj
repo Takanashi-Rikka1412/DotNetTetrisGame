@@ -74,6 +74,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -88,6 +89,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Tetris.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\ButtonStart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\ButtonScore.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\ButtonQuit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\picGameOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\ButtonRestart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\ButtonMenu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\ButtonCloseForm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\ButtonMinForm.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

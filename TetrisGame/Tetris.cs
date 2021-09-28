@@ -113,8 +113,8 @@ namespace TetrisGame
                     {
                         int prow = p.Row;
                         int pcol = p.Col;
-                        p.Row = pCenter.Row - (pcol - pCenter.Col);
-                        p.Col = pCenter.Col + (prow - pCenter.Row);
+                        p.Row = pCenter.Row + (pcol - pCenter.Col);
+                        p.Col = pCenter.Col - (prow - pCenter.Row);
                     }
                     break;
                 case Type.I:
@@ -123,15 +123,15 @@ namespace TetrisGame
                     {
                         int prow = p.Row;
                         int pcol = p.Col;
-                        p.Row = (int)(pICenter.Row - (pcol - pICenter.Col));
-                        p.Col = (int)(pICenter.Col + (prow - pICenter.Row));
+                        p.Row = (int)(pICenter.Row + (pcol - pICenter.Col));
+                        p.Col = (int)(pICenter.Col - (prow - pICenter.Row));
                     }
                     break;
                 case Type.O: break;
                 default: break;
             }
 
-            ChangeState();
+
         }
 
         // 改变旋转状态

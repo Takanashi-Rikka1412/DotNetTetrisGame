@@ -14,9 +14,9 @@ namespace TetrisGame
         public Container()
         {
             map = new int[Common.containerHeight + 1, Common.containerWidth + 1];
-            for (int row = 1; row <= Common.containerHeight; row++)
+            for (int row = 0; row <= Common.containerHeight; row++)
             {
-                for (int col = 1; col <= Common.containerWidth; col++)
+                for (int col = 0; col <= Common.containerWidth; col++)
                 {
                     map[row, col] = -1;
                 }
@@ -25,17 +25,21 @@ namespace TetrisGame
         }
 
 
-        public void Create(Type type)
+        public bool Create(Type type)
         {
             tetris = new Tetris(type);
             int col = (Common.containerWidth - tetris.RightCol() + tetris.LeftCol() - 1) / 2;
             tetris.Move(new Point(0, col));
+
+            if (GameOverCheck())
+                return false;
 
             foreach (Point p in tetris.point)
             {
                 map[p.Row, p.Col] = (int)type;
             }
 
+            return true;
         }
 
 
@@ -73,9 +77,14 @@ namespace TetrisGame
                     }
                     return false;
                 case Move.STAY:
+                    if (tetris.LeftCol() <= 0
+                        || tetris.RightCol() >= Common.containerWidth + 1
+                        || tetris.HighRow() <= 0
+                        || tetris.LowRow() >= Common.containerHeight + 1)
+                        return true;
                     foreach (Point p in tetris.point)
                     {
-                        if (map[p.Row, p.Col] >= 0 && !tetris.point.Contains(new Point(p.Row, p.Col)))
+                        if (map[p.Row, p.Col] >= 0)
                             return true;
                     }
                     return false;
@@ -102,6 +111,31 @@ namespace TetrisGame
         }
 
         // 旋转
+        public void Rotate()
+        {
+            Point[] pTemp = new Point[4]
+            {
+                new Point(tetris.point[0]),
+                new Point(tetris.point[1]),
+                new Point(tetris.point[2]),
+                new Point(tetris.point[3]),};
+
+            DePaint();
+
+            tetris.Rotate();
+
+            if(Collide(Move.STAY))
+            {
+                tetris.point = pTemp;
+            }
+            else
+            {
+                tetris.ChangeState();
+            }
+
+            Paint();
+
+        }
 
 
         // 左移
@@ -170,7 +204,7 @@ namespace TetrisGame
 
             for (int row = rows.Max(), i = 1; row >= 1; row--)
             {
-                if (rows.Contains(row - i))
+                while(rows.Contains(row - i))
                     i++;
                 if (row - i < 1)
                 {
@@ -190,6 +224,12 @@ namespace TetrisGame
             }
 
             return rows.Count;
+        }
+
+        // 游戏结束检查
+        public bool GameOverCheck()
+        {
+            return Collide(Move.STAY);
         }
 
         // 消除检查
