@@ -19,12 +19,12 @@ namespace TetrisGame
             switch (type)
             {
                 case Type.I: point = new Point[4] { new Point(1, 1), new Point(1, 2), new Point(1, 3), new Point(1, 4) }; break;
-                case Type.O: point = new Point[4] { new Point(1, 1), new Point(1, 2), new Point(2, 1), new Point(2, 2) }; ; break;
-                case Type.T: point = new Point[4] { new Point(1, 2), new Point(2, 1), new Point(2, 2), new Point(2, 3) }; ; break;
-                case Type.J: point = new Point[4] { new Point(1, 1), new Point(2, 1), new Point(2, 2), new Point(2, 3) }; ; break;
-                case Type.L: point = new Point[4] { new Point(1, 3), new Point(2, 1), new Point(2, 2), new Point(2, 3) }; ; break;
-                case Type.S: point = new Point[4] { new Point(1, 2), new Point(1, 3), new Point(2, 1), new Point(2, 2) }; ; break;
-                case Type.Z: point = new Point[4] { new Point(1, 1), new Point(1, 2), new Point(2, 2), new Point(2, 3) }; ; break;
+                case Type.O: point = new Point[4] { new Point(1, 1), new Point(1, 2), new Point(2, 1), new Point(2, 2) }; break;
+                case Type.T: point = new Point[4] { new Point(1, 2), new Point(2, 1), new Point(2, 2), new Point(2, 3) }; break;
+                case Type.J: point = new Point[4] { new Point(1, 1), new Point(2, 1), new Point(2, 2), new Point(2, 3) }; break;
+                case Type.L: point = new Point[4] { new Point(1, 3), new Point(2, 1), new Point(2, 2), new Point(2, 3) }; break;
+                case Type.S: point = new Point[4] { new Point(1, 2), new Point(1, 3), new Point(2, 1), new Point(2, 2) }; break;
+                case Type.Z: point = new Point[4] { new Point(1, 1), new Point(1, 2), new Point(2, 2), new Point(2, 3) }; break;
                 default: return;
             }
         }

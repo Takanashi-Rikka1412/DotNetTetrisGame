@@ -259,7 +259,7 @@ namespace TetrisGame
                 {
                     for (int col = 1; col <= Common.containerWidth; col++)
                     {
-                        switch (gameController.container.map[row, col])
+                        switch (gameController.map[row, col])
                         {
                             case 0: brushColor = Brushes.Cyan; break;
                             case 1: brushColor = Brushes.Yellow; break;

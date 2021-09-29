@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TetrisGame
 {
+    // 弃用，直接将功能放入GameController类
     class Container
     {
         public int[,] map;    // 点阵地图
