@@ -23,11 +23,8 @@ namespace TetrisGame
             Col = point.Col;
         }
 
-
-        public void GoUp()
-        {
-            Row--;
-        }
+        
+        // 点移动
         public void GoDown()
         {
             Row++;
@@ -41,7 +38,7 @@ namespace TetrisGame
             Col++;
         }
 
-
+        // 重写Equals,坐标相同时即对象相等
         public override bool Equals(object obj)
         {
             var point = obj as Point;

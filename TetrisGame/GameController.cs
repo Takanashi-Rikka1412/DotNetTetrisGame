@@ -8,18 +8,20 @@ namespace TetrisGame
 {
     class GameController
     {
-        private Timer timer;
+        private Timer timer;              // 方块下落计时器
         private int level;
         private int score;
         private int speedMaxLevel = 10;
         private int speedInterval = 100;
         private Random random = new Random();
 
-        public Container container { get; private set; }
-        public event Action OnNext;
-        public event Action OnPropertyChanged;
-        public event Action OnGameOver;
 
+        public Container container { get; private set; }  // 容器
+        public event Action OnNext;                       // 下一个方块事件
+        public event Action OnPropertyChanged;            // 等级、分数改变事件
+        public event Action OnGameOver;                   // 游戏结束事件
+
+        // 难度等级
         public int Level
         {
             get { return level; }
@@ -29,6 +31,7 @@ namespace TetrisGame
                 OnPropertyChanged();
             }
         }
+        // 分数
         public int Score
         {
             get { return score; }
@@ -38,13 +41,18 @@ namespace TetrisGame
                 OnPropertyChanged();
             }
         }
+        // 下一个方块类型
         public Type NextType { get; private set; }
 
+        // 构造方法
         public GameController()
         {
             container = new Container();
         }
 
+
+
+        // 游戏开始
         public void GameStart()
         {
             Level = 1;
@@ -55,26 +63,74 @@ namespace TetrisGame
             NewTetris();
             timer.Start();
         }
-
+        // 游戏结束
         public void GameOver()
         {
             timer.Stop();
             timer.Close();
         }
+        // 游戏暂停
+        public void Pause()
+        {
+            timer.Stop();
+        }
+        // 游戏继续
+        public void Continue()
+        {
+            timer.Start();
+        }
 
-        public void NewTetris()
+        // 旋转
+        public void Rotate()
+        {
+
+            container.Rotate();
+        }
+        // 左移
+        public void GoLeft()
+        {
+
+            container.GoLeft();
+        }
+        // 右移
+        public void GoRight()
+        {
+
+            container.GoRight();
+        }
+        // 直接下落
+        public void GoDownDirectly()
+        {
+            timer.Stop();
+            int clearRows = container.GoDownDirectly();
+            ScoreWhenClear(clearRows);
+            timer.Start();
+        }
+
+
+
+
+
+
+        // 创建新方块
+        private void NewTetris()
         {
             if (container.Create(NextType) == false)
             {
-                OnGameOver();
+                OnGameOver();   // 无法创建新方块时时游戏结束
                 return;
             }
             NextType = (Type)random.Next(Common.typeCount);
             OnNext();
         }
-
-
-        private void Clear(int clearRows)
+        // 方块下落计时器处理
+        private void TimerUp(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            int clearRows = container.GoDown();
+            ScoreWhenClear(clearRows);
+        }
+        // 消除方块时的加分、加速
+        private void ScoreWhenClear(int clearRows)
         {
             switch (clearRows)
             {
@@ -99,41 +155,5 @@ namespace TetrisGame
 
             NewTetris();
         }
-        private void TimerUp(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            int clearRows = container.GoDown();
-            Clear(clearRows);
-        }
-
-
-        // 旋转
-        public void Rotate()
-        {
-
-            container.Rotate();
-        }
-
-        // 左移
-        public void GoLeft()
-        {
-
-            container.GoLeft();
-        }
-        // 右移
-        public void GoRight()
-        {
-
-            container.GoRight();
-        }
-        // 直接下落
-        public void GoDownDirectly()
-        {
-            timer.Stop();
-            int clearRows = container.GoDownDirectly();
-            Clear(clearRows);
-            timer.Start();
-        }
-
-
     }
 }

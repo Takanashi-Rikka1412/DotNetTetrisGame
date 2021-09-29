@@ -10,7 +10,7 @@ namespace TetrisGame
     {
         public Point[] point;       // 方块各点坐标
         public Type Type { get; }   // 方块类型
-        int state;           // 方块旋转4种状态
+        int state;                  // 方块旋转4种状态
 
         public Tetris(Type type)
         {
@@ -72,30 +72,6 @@ namespace TetrisGame
                     col = p.Col;
             }
             return col;
-        }
-        // 返回中心点
-        public Point CenterPoint()
-        {
-            switch (state)
-            {
-                case 0: return new Point(HighRow() + 1, LeftCol() + 1);
-                case 1: return new Point(HighRow() + 1, LeftCol());
-                case 2: return new Point(HighRow(), LeftCol() + 1);
-                case 3: return new Point(HighRow() + 1, LeftCol() + 1);
-                default: return null;
-            }
-        }
-        // I型中心点
-        public FloatPoint TypeICenterPoint()
-        {
-            switch (state)
-            {
-                case 0: return new FloatPoint(HighRow() + 0.5f, 0.5f * (LeftCol() + RightCol()));
-                case 1: return new FloatPoint(0.5f * (HighRow() + LowRow()), LeftCol() - 0.5f);
-                case 2: return new FloatPoint(HighRow() - 0.5f, 0.5f * (LeftCol() + RightCol()));
-                case 3: return new FloatPoint(0.5f * (HighRow() + LowRow()), LeftCol() + 0.5f);
-                default: return null;
-            }
         }
 
         // 旋转(逆时针)
@@ -172,6 +148,36 @@ namespace TetrisGame
             foreach (Point p in point)
             {
                 p.GoDown();
+            }
+        }
+
+
+
+
+
+
+        // 返回中心点
+        private Point CenterPoint()
+        {
+            switch (state)
+            {
+                case 0: return new Point(HighRow() + 1, LeftCol() + 1);
+                case 1: return new Point(HighRow() + 1, LeftCol());
+                case 2: return new Point(HighRow(), LeftCol() + 1);
+                case 3: return new Point(HighRow() + 1, LeftCol() + 1);
+                default: return null;
+            }
+        }
+        // I型中心点
+        private FloatPoint TypeICenterPoint()
+        {
+            switch (state)
+            {
+                case 0: return new FloatPoint(HighRow() + 0.5f, 0.5f * (LeftCol() + RightCol()));
+                case 1: return new FloatPoint(0.5f * (HighRow() + LowRow()), LeftCol() - 0.5f);
+                case 2: return new FloatPoint(HighRow() - 0.5f, 0.5f * (LeftCol() + RightCol()));
+                case 3: return new FloatPoint(0.5f * (HighRow() + LowRow()), LeftCol() + 0.5f);
+                default: return null;
             }
         }
 
